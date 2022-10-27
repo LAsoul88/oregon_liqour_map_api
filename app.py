@@ -8,6 +8,7 @@ from routes.liqour import get_bottles, get_bottle
 """ , create_bottle, update_bottle, delete_bottle """
 from routes.store import get_stores, get_store
 """ , create_store, update_store, delete_store """
+# from routes.liqour_store import create_table, update_table, delete_table
 from scraper.scraper import Scraper
 from database.db_converter import update_db
 
@@ -90,6 +91,21 @@ def store_id_route(id):
   # # delete a store
   # elif request.method == 'DELETE':
   #   return delete_store(id)
+
+# @app.route('/table', methods = ['POST'])
+# def table_route():
+#   # create a table
+#   if request.method == 'POST':
+#     return create_table()
+
+# @app.route('/table/<id>', methods = ['PUT', 'DELETE'])
+# def table_id_route(id):
+#   # update a table
+#   if request.method == 'PUT':
+#     return update_table(id)
+#   # delete a table
+#   elif request.method == 'DELETE':
+#     return delete_table(id)
 
 if __name__ == '__main__':
   app.run(debug=False)
