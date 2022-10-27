@@ -5,3 +5,5 @@
 ``` pipenv install ```
 
 ``` flask run ```
+
+Create credentials.py in root directory and store postgresql server password there.
