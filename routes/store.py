@@ -1,6 +1,3 @@
-# from flask import request
-
-# from database.db import db
 from models.store import Store
 from models.liqour import Liqour
 from models.liqour_store import LiqourStore
