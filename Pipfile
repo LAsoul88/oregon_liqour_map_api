@@ -9,7 +9,7 @@ sqlalchemy = "*"
 flask-sqlalchemy = "*"
 flask-cors = "*"
 flask-apscheduler = "*"
-psycopg2 = "*"
+psycopg2-binary = "*"
 beautifulsoup4 = "*"
 requests = "*"
 
