@@ -16,7 +16,11 @@ class Config:
   SCHEDULER_API_ENABLED = True
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['RDS_HOSTNAME']
+username = os.environ['RDS_USERNAME']
+password = os.environ['RDS_PASSWORD']
+host = os.environ['RDS_HOSTNAME']
+url_string = f'postgresql://{username}:{password}@{host}'
+app.config['SQLALCHEMY_DATABASE_URI'] = url_string
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config.from_object(Config())
 
