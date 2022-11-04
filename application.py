@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, redirect, url_for
 from flask_cors import CORS
 from flask_apscheduler import APScheduler
@@ -15,7 +16,7 @@ class Config:
   SCHEDULER_API_ENABLED = True
 
 app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = DB_KEY['DB_VAL']
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['RDS_HOSTNAME']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config.from_object(Config())
 
