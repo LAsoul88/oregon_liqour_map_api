@@ -15,18 +15,18 @@ from database.db_converter import update_db
 class Config:
   SCHEDULER_API_ENABLED = True
 
-application = Flask(__name__)
+app = Flask(__name__)
 username = os.environ['RDS_USERNAME']
 password = os.environ['RDS_PASSWORD']
 host = os.environ['RDS_HOSTNAME']
-url_string = f'postgresql://{username}:{password}@{host}'
-application.config['SQLALCHEMY_DATABASE_URI'] = url_string
-application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-application.config.from_object(Config())
+url_string = f'postgresql://{username}@{host}'
+app.config['SQLALCHEMY_DATABASE_URI'] = url_string
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config.from_object(Config())
 
-initialize_db(application)
+initialize_db(app)
 
-CORS(application)
+CORS(app)
 
 scheduler = APScheduler()
 @scheduler.task('cron', id='update_db', hour=3, minute=30, misfire_grace_time=900)
@@ -38,15 +38,15 @@ def database_update():
   print('db updating in progress')
   update_db()
   print('db updating complete')
-scheduler.init_app(application)
+scheduler.init_app(app)
 scheduler.start()
 
 
-@application.route('/')
+@app.route('/')
 def hello():
   return redirect(url_for('liqour_route'))
 
-@application.route('/liqour', methods = ['GET'
+@app.route('/liqour', methods = ['GET'
 # , 'POST'
  ])
 def liqour_route():
@@ -57,7 +57,7 @@ def liqour_route():
   # elif request.method == 'POST':
   #   return create_bottle()
   
-@application.route('/liqour/<id>', methods = ['GET'
+@app.route('/liqour/<id>', methods = ['GET'
 # , 'PUT', 'DELETE'
 ])
 def liqour_id_route(id):
@@ -71,7 +71,7 @@ def liqour_id_route(id):
   # elif request.method == 'DELETE':
   #   return delete_bottle(id)
 
-@application.route('/stores', methods = ['GET'
+@app.route('/stores', methods = ['GET'
 # , 'POST'
 ])
 def store_route():
@@ -82,7 +82,7 @@ def store_route():
   # elif request.method == 'POST':
   #   return create_store()
 
-@application.route('/stores/<id>', methods = ['GET'
+@app.route('/stores/<id>', methods = ['GET'
 # , 'PUT', 'DELETE'
 ])
 def store_id_route(id):
@@ -112,4 +112,4 @@ def store_id_route(id):
 #     return delete_table(id)
 
 if __name__ == '__main__':
-  application.run(debug=False)
+  app.run(debug=False)
