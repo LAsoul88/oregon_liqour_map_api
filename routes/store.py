@@ -19,6 +19,8 @@ def get_store(id):
   store = Store.query.filter_by(id = id).one()
   if not store:
     return f'No Store at {id}'
+  elif store:
+    return f'Store: {store} - id: {id}'
   liqour_store_table = LiqourStore.query.filter_by(store_id = id).order_by(LiqourStore.liqour_id.asc()).all()
   liqour_list = []
   for row in liqour_store_table:
