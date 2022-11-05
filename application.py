@@ -15,7 +15,7 @@ from database.db_converter import update_db
 class Config:
   SCHEDULER_API_ENABLED = True
 
-app = Flask(__name__)
+application = app = Flask(__name__)
 username = os.environ['RDS_USERNAME']
 password = os.environ['RDS_PASSWORD']
 host = os.environ['RDS_HOSTNAME']
