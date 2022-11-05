@@ -1,16 +1,20 @@
 def format_store(store, liqour_list = None):
   if liqour_list:
-    return {
-      "id": store.id,
-      "address": store.address,
-      "phone_number": store.phone_number,
-      "liqour": liqour_list,
+    return { 
+      "store": {
+        "id": store.id,
+        "address": store.address,
+        "phone_number": store.phone_number,
+        "liqour": liqour_list,
+      }
     }
   else:
     return {
-      "id": store.id,
-      "address": store.address,
-      "phone_number": store.phone_number,
+      "store": {
+        "id": store.id,
+        "address": store.address,
+        "phone_number": store.phone_number,
+      }
     }
 
 def format_liqour(liqour, store_list = None):
