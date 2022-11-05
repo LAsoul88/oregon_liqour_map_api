@@ -15,18 +15,18 @@ from database.db_converter import update_db
 class Config:
   SCHEDULER_API_ENABLED = True
 
-app = Flask(__name__)
+application = Flask(__name__)
 username = os.environ['RDS_USERNAME']
 password = os.environ['RDS_PASSWORD']
 host = os.environ['RDS_HOSTNAME']
 url_string = f'postgresql://{username}:{password}@{host}'
-app.config['SQLALCHEMY_DATABASE_URI'] = url_string
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config.from_object(Config())
+application.config['SQLALCHEMY_DATABASE_URI'] = url_string
+application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+application.config.from_object(Config())
 
-initialize_db(app)
+initialize_db(application)
 
-CORS(app)
+CORS(application)
 
 scheduler = APScheduler()
 @scheduler.task('cron', id='update_db', hour=3, minute=30, misfire_grace_time=900)
@@ -38,15 +38,15 @@ def database_update():
   print('db updating in progress')
   update_db()
   print('db updating complete')
-scheduler.init_app(app)
+scheduler.init_app(application)
 scheduler.start()
 
 
-@app.route('/')
+@application.route('/')
 def hello():
   return redirect(url_for('liqour_route'))
 
-@app.route('/liqour', methods = ['GET'
+@application.route('/liqour', methods = ['GET'
 # , 'POST'
  ])
 def liqour_route():
@@ -57,7 +57,7 @@ def liqour_route():
   # elif request.method == 'POST':
   #   return create_bottle()
   
-@app.route('/liqour/<id>', methods = ['GET'
+@application.route('/liqour/<id>', methods = ['GET'
 # , 'PUT', 'DELETE'
 ])
 def liqour_id_route(id):
@@ -71,7 +71,7 @@ def liqour_id_route(id):
   # elif request.method == 'DELETE':
   #   return delete_bottle(id)
 
-@app.route('/stores', methods = ['GET'
+@application.route('/stores', methods = ['GET'
 # , 'POST'
 ])
 def store_route():
@@ -82,7 +82,7 @@ def store_route():
   # elif request.method == 'POST':
   #   return create_store()
 
-@app.route('/stores/<id>', methods = ['GET'
+@application.route('/stores/<id>', methods = ['GET'
 # , 'PUT', 'DELETE'
 ])
 def store_id_route(id):
@@ -112,4 +112,4 @@ def store_id_route(id):
 #     return delete_table(id)
 
 if __name__ == '__main__':
-  app.run(debug=False)
+  application.run(debug=False)
