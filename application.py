@@ -19,7 +19,7 @@ app = Flask(__name__)
 username = os.environ['RDS_USERNAME']
 password = os.environ['RDS_PASSWORD']
 host = os.environ['RDS_HOSTNAME']
-url_string = f'postgresql://{username}@{host}'
+url_string = f'postgresql://{username}:{password}@{host}'
 app.config['SQLALCHEMY_DATABASE_URI'] = url_string
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config.from_object(Config())
