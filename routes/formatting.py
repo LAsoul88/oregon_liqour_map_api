@@ -1,6 +1,6 @@
 def format_store(store, liqour_list = None):
   if liqour_list:
-    return {
+    return { 
       "id": store.id,
       "address": store.address,
       "phone_number": store.phone_number,

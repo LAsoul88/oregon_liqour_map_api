@@ -1,7 +1,7 @@
+import os
 from flask import Flask, request, redirect, url_for
 from flask_cors import CORS
 from flask_apscheduler import APScheduler
-from credentials import database_url
 
 from database.db import initialize_db
 from routes.liqour import get_bottles, get_bottle
@@ -15,8 +15,15 @@ from database.db_converter import update_db
 class Config:
   SCHEDULER_API_ENABLED = True
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+application = app = Flask(__name__)
+username = os.environ['RDS_USERNAME']
+password = os.environ['RDS_PASSWORD']
+host = os.environ['RDS_HOSTNAME']
+port = os.environ['RDS_PORT']
+database = os.environ['RDS_DB_NAME']
+
+url_string = f'postgresql://{username}:{password}@{host}:{port}/{database}'
+app.config['SQLALCHEMY_DATABASE_URI'] = url_string
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config.from_object(Config())
 
