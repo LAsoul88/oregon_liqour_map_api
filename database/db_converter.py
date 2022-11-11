@@ -24,6 +24,7 @@ def update_db():
     }
 
     liqour_data = {
+      'type': row[6],
       'id': row[7],
       'item_code': row[8],
       'description': row[9],

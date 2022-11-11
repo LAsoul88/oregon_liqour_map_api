@@ -19,12 +19,9 @@ def filter_results(request):
   filter_string = request['data']['filter']
   search_string = request['data']['search']
   if filter_string == 'Browse By Store':
-    print('we here')
     stores = Store.query.filter(Store.address.ilike("%{}%".format(search_string))).all()
     for store in stores:
       results.append(store.serialized)
-    return results
-  elif filter_string == 'Browse By Area':
     return results
   elif filter_string == 'Browse All Locations':
     return results
@@ -41,8 +38,6 @@ def filter_results(request):
   elif filter_string == 'age':
     return results
 # (Browse By Store) - Address
-# (Browse By City) - City 
-# (Browse By Postal Code) - Postal Code
 # (Browse All Locations) - Description
 # (Type) - Category
 # (Case Price) - Case Price

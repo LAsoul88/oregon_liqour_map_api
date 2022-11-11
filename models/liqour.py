@@ -10,6 +10,7 @@ class Liqour(db.Model):
   age = db.Column(db.String(10))
   case_price = db.Column(db.String(12))
   bottle_price = db.Column(db.String(12))
+  type = db.Column(db.String(15))
 
   def __repr__(self):
     return self.id
@@ -23,6 +24,7 @@ class Liqour(db.Model):
     self.age = liqour_data['age']
     self.case_price = liqour_data['case_price']
     self.bottle_price = liqour_data['bottle_price']
+    self.type = liqour_data['type']
 
   @property
   def serialized(self):
@@ -34,5 +36,6 @@ class Liqour(db.Model):
       'proof': self.proof,
       'age': self.age,
       'case_price': self.case_price,
-      'bottle_price': self.bottle_price
+      'bottle_price': self.bottle_price,
+      'type': self.type
     }
