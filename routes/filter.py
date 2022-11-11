@@ -18,29 +18,28 @@ def filter_results(request):
   results = []
   filter_string = request['data']['filter']
   search_string = request['data']['search']
-  match filter_string:
-    case 'Browse By Store':
-      print('we here')
-      stores = Store.query.filter(Store.address.ilike("%{}%".format(search_string))).all()
-      for store in stores:
-        results.append(store.serialized)
-      return results
-    case 'Browse By Area':
-      return results
-    case 'Browse All Locations':
-      return results
-    case 'Type':
-      return results
-    case 'Case Price':
-      return results
-    case 'Bottle Price':
-      return results
-    case 'size': 
-      return results
-    case 'proof':
-      return results
-    case 'age':
-      return results
+  if filter_string == 'Browse By Store':
+    print('we here')
+    stores = Store.query.filter(Store.address.ilike("%{}%".format(search_string))).all()
+    for store in stores:
+      results.append(store.serialized)
+    return results
+  elif filter_string == 'Browse By Area':
+    return results
+  elif filter_string == 'Browse All Locations':
+    return results
+  elif filter_string == 'Type':
+    return results
+  elif filter_string == 'Case Price':
+    return results
+  elif filter_string == 'Bottle Price':
+    return results
+  elif filter_string == 'size': 
+    return results
+  elif filter_string == 'proof':
+    return results
+  elif filter_string == 'age':
+    return results
 # (Browse By Store) - Address
 # (Browse By City) - City 
 # (Browse By Postal Code) - Postal Code
