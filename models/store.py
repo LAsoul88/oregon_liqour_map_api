@@ -18,3 +18,11 @@ class Store(db.Model):
       f"{store_data['address']} {store_data['city']}, {store_data['state']} {store_data['postal_code']}"
     )
     self.phone_number = store_data['phone_number']
+
+  @property
+  def serialized(self):
+    return {
+      'id': self.id,
+      'address': self.address,
+      'phone_number': self.phone_number
+    }

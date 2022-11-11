@@ -23,3 +23,16 @@ class Liqour(db.Model):
     self.age = liqour_data['age']
     self.case_price = liqour_data['case_price']
     self.bottle_price = liqour_data['bottle_price']
+
+  @property
+  def serialized(self):
+    return {
+      'id': self.id,
+      'item_code': self.item_code,
+      'description': self.description,
+      'size': self.size,
+      'proof': self.proof,
+      'age': self.age,
+      'case_price': self.case_price,
+      'bottle_price': self.bottle_price
+    }

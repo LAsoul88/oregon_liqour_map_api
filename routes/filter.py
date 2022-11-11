@@ -1,13 +1,29 @@
+from sqlalchemy import func
+from flask import request
+
 from database.db import db
 from models.store import Store
 from models.liqour import Liqour
 from models.liqour_store import LiqourStore
 
-def filter_results(filter):
+# filter object
+# {
+#   data: {
+#     search: <query here>,
+#     filter: <filter here>,
+#   }
+# }
+
+def filter_results(request):
   results = []
-  search_string = filter.data['search']
-  match search_string:
+  filter_string = request['data']['filter']
+  search_string = request['data']['search']
+  match filter_string:
     case 'Browse By Store':
+      print('we here')
+      stores = Store.query.filter(Store.address.ilike("%{}%".format(search_string))).all()
+      for store in stores:
+        results.append(store.serialized)
       return results
     case 'Browse By Area':
       return results
@@ -26,7 +42,8 @@ def filter_results(filter):
     case 'age':
       return results
 # (Browse By Store) - Address
-# (Browse By Area) - City or Postal Code
+# (Browse By City) - City 
+# (Browse By Postal Code) - Postal Code
 # (Browse All Locations) - Description
 # (Type) - Category
 # (Case Price) - Case Price

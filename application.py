@@ -68,11 +68,12 @@ def store_id_route(id):
   if request.method == 'GET':
     return get_store(id)
 
-@app.route('/filter', methods = ['GET'])
-def filter_route(filter):
+@app.route('/filter', methods = ['POST'])
+def filter_route():
   # filter results
-  if request.method == 'GET':
-    return filter_results(filter)
+  if request.method == 'POST':
+    data = request.get_json()
+    return filter_results(data)
 
 if __name__ == '__main__':
   app.run(debug=False)
