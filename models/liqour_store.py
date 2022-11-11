@@ -11,9 +11,11 @@ class LiqourStore(db.Model):
     self.liqour_id = liqour_store_data['liqour_id']
     self.store_id = liqour_store_data['store_id']
 
-# liqour_store_table = db.Table(
-#   "liqour_store",
-#   db.Column("liqour_id", db.String(15), db.ForeignKey('liqour.id'), primary_key=True),
-#   db.Column("store_id", db.Integer, db.ForeignKey('stores.id'), primary_key=True),
-#   db.Column("quantity", db.Integer),
-# )
+  @property
+  def serialized(self):
+    return {
+      'quantity': self.quantity,
+      'liqour_id': self.liqour_id,
+      'store_id': self.store_id
+    }
+
