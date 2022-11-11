@@ -5,25 +5,24 @@ from flask_apscheduler import APScheduler
 
 from database.db import initialize_db
 from routes.liqour import get_bottles, get_bottle
-""" , create_bottle, update_bottle, delete_bottle """
 from routes.store import get_stores, get_store
-""" , create_store, update_store, delete_store """
-# from routes.liqour_store import create_table, update_table, delete_table
+from routes.filter import filter_results
 from scraper.scraper import Scraper
 from database.db_converter import update_db
+from credentials import dev_url
 
 class Config:
   SCHEDULER_API_ENABLED = True
 
 application = app = Flask(__name__)
-username = os.environ['RDS_USERNAME']
-password = os.environ['RDS_PASSWORD']
-host = os.environ['RDS_HOSTNAME']
-port = os.environ['RDS_PORT']
-database = os.environ['RDS_DB_NAME']
+# username = os.environ['RDS_USERNAME']
+# password = os.environ['RDS_PASSWORD']
+# host = os.environ['RDS_HOSTNAME']
+# port = os.environ['RDS_PORT']
+# database = os.environ['RDS_DB_NAME']
 
-url_string = f'postgresql://{username}:{password}@{host}:{port}/{database}'
-app.config['SQLALCHEMY_DATABASE_URI'] = url_string
+# url_string = f'postgresql://{username}:{password}@{host}:{port}/{database}'
+app.config['SQLALCHEMY_DATABASE_URI'] = dev_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config.from_object(Config())
 
@@ -44,75 +43,37 @@ def database_update():
 scheduler.init_app(app)
 scheduler.start()
 
-
-@app.route('/')
-def hello():
-  return redirect(url_for('liqour_route'))
-
-@app.route('/liqour', methods = ['GET'
-# , 'POST'
- ])
+# routes
+@app.route('/liqour', methods = ['GET'])
 def liqour_route():
   # get all bottles
   if request.method == 'GET':
     return get_bottles()
-  # # create a bottle
-  # elif request.method == 'POST':
-  #   return create_bottle()
   
-@app.route('/liqour/<id>', methods = ['GET'
-# , 'PUT', 'DELETE'
-])
+@app.route('/liqour/<id>', methods = ['GET'])
 def liqour_id_route(id):
   # get single bottle
   if request.method == 'GET':
     return get_bottle(id)
-  # update a bottle
-  # elif request.method == 'PUT':
-  #   return update_bottle(id)
-  # # delete a bottle
-  # elif request.method == 'DELETE':
-  #   return delete_bottle(id)
 
-@app.route('/stores', methods = ['GET'
-# , 'POST'
-])
+@app.route('/stores', methods = ['GET'])
 def store_route():
   # get all stores
   if request.method == 'GET':
     return get_stores()
-  # # create a store
-  # elif request.method == 'POST':
-  #   return create_store()
 
-@app.route('/stores/<id>', methods = ['GET'
-# , 'PUT', 'DELETE'
-])
+@app.route('/stores/<id>', methods = ['GET'])
 def store_id_route(id):
   # get a store
   if request.method == 'GET':
     return get_store(id)
-  # # update a store
-  # elif request.method == 'PUT':
-  #   return update_store(id)
-  # # delete a store
-  # elif request.method == 'DELETE':
-  #   return delete_store(id)
 
-# @app.route('/table', methods = ['POST'])
-# def table_route():
-#   # create a table
-#   if request.method == 'POST':
-#     return create_table()
-
-# @app.route('/table/<id>', methods = ['PUT', 'DELETE'])
-# def table_id_route(id):
-#   # update a table
-#   if request.method == 'PUT':
-#     return update_table(id)
-#   # delete a table
-#   elif request.method == 'DELETE':
-#     return delete_table(id)
+@app.route('/filter', methods = ['POST'])
+def filter_route():
+  # filter results
+  if request.method == 'POST':
+    data = request.get_json()
+    return filter_results(data)
 
 if __name__ == '__main__':
   app.run(debug=False)
