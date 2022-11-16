@@ -1,10 +1,10 @@
-def format_store(store, liqour_list = None):
-  if liqour_list:
+def format_store(store, liquor_list = None):
+  if liquor_list:
     return { 
       "id": store.id,
       "address": store.address,
       "phone_number": store.phone_number,
-      "liqour": liqour_list,
+      "liquor": liquor_list,
     }
   else:
     return {
@@ -13,29 +13,29 @@ def format_store(store, liqour_list = None):
       "phone_number": store.phone_number,
     }
 
-def format_liqour(liqour, store_list = None):
+def format_liquor(liquor, store_list = None):
   if store_list:
     return {
-      "id": liqour.id,
-      "item_code": liqour.item_code,
-      "description": liqour.description,
-      "size": liqour.size,
-      "proof": liqour.proof,
-      "age": liqour.age,
-      "case_price": liqour.case_price,
-      "bottle_price": liqour.bottle_price,
-      "type": liqour.type,
+      "id": liquor.id,
+      "item_code": liquor.item_code,
+      "description": liquor.description,
+      "size": liquor.size,
+      "proof": liquor.proof,
+      "age": liquor.age,
+      "case_price": liquor.case_price,
+      "bottle_price": liquor.bottle_price,
+      "type": liquor.type,
       "stores": store_list
     }
   else:
     return {
-      "id": liqour.id,
-      "item_code": liqour.item_code,
-      "description": liqour.description,
-      "size": liqour.size,
-      "proof": liqour.proof,
-      "age": liqour.age,
-      "case_price": liqour.case_price,
-      "bottle_price": liqour.bottle_price,
-      "type": liqour.type
-      }
+      "id": liquor.id,
+      "item_code": liquor.item_code,
+      "description": liquor.description,
+      "size": liquor.size,
+      "proof": liquor.proof,
+      "age": liquor.age,
+      "case_price": liquor.case_price,
+      "bottle_price": liquor.bottle_price,
+      "type": liquor.type
+    }

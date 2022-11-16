@@ -1,6 +1,6 @@
-# oregon_liqour_map_api
+# oregon_liquor_map_api
 
-``` git clone https://github.com/LAsoul88/oregon_liqour_map_api.git ```
+``` git clone https://github.com/LAsoul88/oregon_liquor_map_api.git ```
 
 ``` pipenv install ```
 

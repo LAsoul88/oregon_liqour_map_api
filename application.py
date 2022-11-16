@@ -4,7 +4,7 @@ from flask_cors import CORS
 from flask_apscheduler import APScheduler
 
 from database.db import initialize_db
-from routes.liqour import get_bottles, get_bottle
+from routes.liquor import get_bottles, get_bottle
 from routes.store import get_stores, get_store
 from routes.filter import filter_results
 from scraper.scraper import Scraper
@@ -44,14 +44,14 @@ scheduler.init_app(app)
 scheduler.start()
 
 # routes
-@app.route('/liqour', methods = ['GET'])
-def liqour_route():
+@app.route('/liquor', methods = ['GET'])
+def liquor_route():
   # get all bottles
   if request.method == 'GET':
     return get_bottles()
   
-@app.route('/liqour/<id>', methods = ['GET'])
-def liqour_id_route(id):
+@app.route('/liquor/<id>', methods = ['GET'])
+def liquor_id_route(id):
   # get single bottle
   if request.method == 'GET':
     return get_bottle(id)
