@@ -8,8 +8,9 @@ class Liqour(db.Model):
   size = db.Column(db.String(10))
   proof = db.Column(db.Float)
   age = db.Column(db.String(10))
-  case_price = db.Column(db.String(12))
-  bottle_price = db.Column(db.String(12))
+  case_price = db.Column(db.Float)
+  bottle_price = db.Column(db.Float)
+  type = db.Column(db.String(15))
 
   def __repr__(self):
     return self.id
@@ -21,8 +22,9 @@ class Liqour(db.Model):
     self.size = liqour_data['size']
     self.proof = liqour_data['proof']
     self.age = liqour_data['age']
-    self.case_price = liqour_data['case_price']
-    self.bottle_price = liqour_data['bottle_price']
+    self.case_price = '{:2f}'.format(liqour_data['case_price'])
+    self.bottle_price = '{:2f}'.format(liqour_data['bottle_price'])
+    self.type = liqour_data['type']
 
   @property
   def serialized(self):
@@ -33,6 +35,7 @@ class Liqour(db.Model):
       'size': self.size,
       'proof': self.proof,
       'age': self.age,
-      'case_price': self.case_price,
-      'bottle_price': self.bottle_price
+      'case_price': '$' + str('{:.2f}'.format(self.case_price)),
+      'bottle_price': '$' + str('{:.2f}'.format(self.bottle_price)),
+      'type': self.type,
     }

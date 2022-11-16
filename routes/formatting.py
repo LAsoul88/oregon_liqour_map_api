@@ -24,6 +24,7 @@ def format_liqour(liqour, store_list = None):
       "age": liqour.age,
       "case_price": liqour.case_price,
       "bottle_price": liqour.bottle_price,
+      "type": liqour.type,
       "stores": store_list
     }
   else:
@@ -36,4 +37,5 @@ def format_liqour(liqour, store_list = None):
       "age": liqour.age,
       "case_price": liqour.case_price,
       "bottle_price": liqour.bottle_price,
+      "type": liqour.type
       }
