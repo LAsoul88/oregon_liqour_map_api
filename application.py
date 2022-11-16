@@ -65,7 +65,6 @@ def store_route():
 @app.route('/stores/<id>', methods = ['GET'])
 def store_id_route(id):
   # get a store
-  print('we are here')
   if request.method == 'GET':
     return get_store(id)
 
