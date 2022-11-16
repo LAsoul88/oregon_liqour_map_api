@@ -14,7 +14,7 @@ def filter_results(request):
   results = []
   filter_string = request['data']['filter']
   search_string = request['data']['search']
-
+  
   if filter_string == 'Browse By Store':
     stores = Store.query.filter(Store.address.ilike("%{}%".format(search_string))).all()
     for store in stores:
@@ -55,7 +55,7 @@ def filter_results(request):
     for bottle in liqour:
       results.append(bottle.serialized)
     return results
-
+    
 # (Browse By Store) - Address
 # (Browse All Liqour) - Description
 # (Type) - Category
