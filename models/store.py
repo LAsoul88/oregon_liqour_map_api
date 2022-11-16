@@ -1,5 +1,4 @@
 from database.db import db
-# from models.liqour_store import liqour_store_table
 
 
 class Store(db.Model):

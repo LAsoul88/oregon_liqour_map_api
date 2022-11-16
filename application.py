@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, redirect, url_for
+from flask import Flask, request
 from flask_cors import CORS
 from flask_apscheduler import APScheduler
 

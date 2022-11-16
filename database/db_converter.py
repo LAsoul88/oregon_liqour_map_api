@@ -24,14 +24,15 @@ def update_db():
     }
 
     liqour_data = {
+      'type': row[6],
       'id': row[7],
       'item_code': row[8],
       'description': row[9],
       'size': row[10],
       'proof': row[11],
       'age': row[12],
-      'case_price': row[13],
-      'bottle_price': row[14],
+      'case_price': float(row[13].replace('$', '')),
+      'bottle_price': float(row[14].replace('$', '')),
     }
 
     liqour_store_data = {
