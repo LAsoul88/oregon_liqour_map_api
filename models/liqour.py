@@ -22,8 +22,8 @@ class Liqour(db.Model):
     self.size = liqour_data['size']
     self.proof = liqour_data['proof']
     self.age = liqour_data['age']
-    self.case_price = liqour_data['case_price']
-    self.bottle_price = liqour_data['bottle_price']
+    self.case_price = '{:2f}'.format(liqour_data['case_price'])
+    self.bottle_price = '{:2f}'.format(liqour_data['bottle_price'])
     self.type = liqour_data['type']
 
   @property
@@ -37,5 +37,5 @@ class Liqour(db.Model):
       'age': self.age,
       'case_price': '$' + str('{:.2f}'.format(self.case_price)),
       'bottle_price': '$' + str('{:.2f}'.format(self.bottle_price)),
-      'type': self.type
+      'type': self.type,
     }

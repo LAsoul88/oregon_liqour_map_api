@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, redirect, url_for
+from flask import Flask, request
 from flask_cors import CORS
 from flask_apscheduler import APScheduler
 
@@ -65,6 +65,7 @@ def store_route():
 @app.route('/stores/<id>', methods = ['GET'])
 def store_id_route(id):
   # get a store
+  print('we are here')
   if request.method == 'GET':
     return get_store(id)
 
