@@ -1,7 +1,7 @@
 from database.db import db
 
-class Liqour(db.Model):
-  __tablename__ = 'liqour'
+class Liquor(db.Model):
+  __tablename__ = 'liquor'
   id = db.Column(db.String(15), primary_key=True)
   item_code = db.Column(db.String(10))
   description = db.Column(db.String(100))
@@ -10,21 +10,21 @@ class Liqour(db.Model):
   age = db.Column(db.String(10))
   case_price = db.Column(db.Float)
   bottle_price = db.Column(db.Float)
-  type = db.Column(db.String(15))
+  type = db.Column(db.String(30))
 
   def __repr__(self):
     return self.id
 
-  def __init__(self, liqour_data):
-    self.id = liqour_data['id']
-    self.item_code = liqour_data['item_code']
-    self.description = liqour_data['description']
-    self.size = liqour_data['size']
-    self.proof = liqour_data['proof']
-    self.age = liqour_data['age']
-    self.case_price = '{:2f}'.format(liqour_data['case_price'])
-    self.bottle_price = '{:2f}'.format(liqour_data['bottle_price'])
-    self.type = liqour_data['type']
+  def __init__(self, liquor_data):
+    self.id = liquor_data['id']
+    self.item_code = liquor_data['item_code']
+    self.description = liquor_data['description']
+    self.size = liquor_data['size']
+    self.proof = liquor_data['proof']
+    self.age = liquor_data['age']
+    self.case_price = '{:2f}'.format(liquor_data['case_price'])
+    self.bottle_price = '{:2f}'.format(liquor_data['bottle_price'])
+    self.type = liquor_data['type']
 
   @property
   def serialized(self):
