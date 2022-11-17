@@ -6,7 +6,8 @@ class Store(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   address = db.Column(db.String(100))
   phone_number = db.Column(db.String(20))
-  # liquor = db.relationship('liquor', secondary='liquor_store', backref='stores')
+  lat = db.Column(db.Float)
+  lon = db.Column(db.Float)
 
   def __repr__(self):
     return self.address
@@ -17,11 +18,13 @@ class Store(db.Model):
       f"{store_data['address']} {store_data['city']}, {store_data['state']} {store_data['postal_code']}"
     )
     self.phone_number = store_data['phone_number']
+    self.coordinates = [store_data['lat'], store_data['lon']]
 
   @property
   def serialized(self):
     return {
       'id': self.id,
       'address': self.address,
-      'phone_number': self.phone_number
+      'phone_number': self.phone_number,
+      'coordinates': self.coordinates,
     }

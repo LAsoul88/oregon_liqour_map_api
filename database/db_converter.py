@@ -14,13 +14,16 @@ def update_db():
 
   for row in oregon_liquor_csv:
 
+    coordinates = f'{row[1]} {row[2]}, {row[3]} {row[4]}'
     store_data = {
       'id': row[0],
       'address': row[1],
       'city': row[2],
       'state': row[3],
       'postal_code': row[4],
-      'phone_number': row[5]
+      'phone_number': row[5],
+      'lat': coordinates[0],
+      'lon': coordinates[1]
     }
 
     liquor_data = {
