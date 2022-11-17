@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request
+from flask import Flask, request, redirect, url_for
 from flask_cors import CORS
 from flask_apscheduler import APScheduler
 
@@ -44,6 +44,10 @@ scheduler.init_app(app)
 scheduler.start()
 
 # routes
+@app.route('/')
+def redirect_route():
+  return redirect(url_for('liqour_route'))
+
 @app.route('/liquor', methods = ['GET'])
 def liquor_route():
   # get all bottles
