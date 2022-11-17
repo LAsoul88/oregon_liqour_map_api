@@ -8,7 +8,7 @@ from models.liquor_store import LiquorStore
 
 def format_table(table):
   return {
-    "liquor_id": table.liqour_id,
+    "liquor_id": table.liquor_id,
     "store_id": table.store_id,
     "quantity": table.quantity
   }
