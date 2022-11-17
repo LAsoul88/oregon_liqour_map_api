@@ -15,6 +15,7 @@ class Config:
   SCHEDULER_API_ENABLED = True
 
 application = app = Flask(__name__)
+
 username = os.environ['RDS_USERNAME']
 password = os.environ['RDS_PASSWORD']
 host = os.environ['RDS_HOSTNAME']
@@ -78,6 +79,11 @@ def filter_route():
   if request.method == 'POST':
     data = request.get_json()
     return filter_results(data)
+
+@app.route('/health_check')
+def check():
+  get_store(1213)
+  return 'healthy'
 
 if __name__ == '__main__':
   app.run(debug=False)
