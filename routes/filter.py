@@ -50,7 +50,6 @@ def filter_results(request):
     if filter_string == 'Browse All Liquor':
       filter_string = 'description'
     descriptor = getattr(Liquor, filter_string.replace(' ', '_').lower())
-    print('=== search_string ===', search_string)
     liquor = Liquor.query.filter(descriptor.ilike("%{}%".format(search_string))).all()
     for bottle in liquor:
       results.append(bottle.serialized)
