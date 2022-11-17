@@ -46,7 +46,7 @@ scheduler.start()
 # routes
 @app.route('/')
 def redirect_route():
-  return redirect(url_for('liqour_route'))
+  return redirect(url_for('liquor_route'))
 
 @app.route('/liquor', methods = ['GET'])
 def liquor_route():
