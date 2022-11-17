@@ -6,7 +6,7 @@ class Store(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   address = db.Column(db.String(100))
   phone_number = db.Column(db.String(20))
-  liqour = db.relationship('Liqour', secondary='liqour_store', backref='store')
+  # liquor = db.relationship('liquor', secondary='liquor_store', backref='stores')
 
   def __repr__(self):
     return self.address

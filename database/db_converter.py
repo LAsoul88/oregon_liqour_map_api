@@ -1,18 +1,18 @@
 import csv
 from database.db import db
-from models.liqour import Liqour
+from models.liquor import Liquor
 from models.store import Store
-from models.liqour_store import LiqourStore
+from models.liquor_store import LiquorStore
 
 def update_db():
   file = open('ols-results-latest.csv')
 
-  oregon_liqour_csv = csv.reader(file)
+  oregon_liquor_csv = csv.reader(file)
 
   header = []
-  header = next(oregon_liqour_csv)
+  header = next(oregon_liquor_csv)
 
-  for row in oregon_liqour_csv:
+  for row in oregon_liquor_csv:
 
     store_data = {
       'id': row[0],
@@ -23,7 +23,7 @@ def update_db():
       'phone_number': row[5]
     }
 
-    liqour_data = {
+    liquor_data = {
       'type': row[6],
       'id': row[7],
       'item_code': row[8],
@@ -35,29 +35,29 @@ def update_db():
       'bottle_price': float(row[14].replace('$', '')),
     }
 
-    liqour_store_data = {
+    liquor_store_data = {
       'quantity': row[15],
-      'liqour_id': row[7],
+      'liquor_id': row[7],
       'store_id': row[0]
     }
 
     store = Store.query.filter_by(id = store_data['id']).scalar()
-    liqour = Liqour.query.filter_by(id = liqour_data['id']).scalar()
-    store_has_liqour = LiqourStore.query.filter_by(liqour_id = liqour_data['id']).filter_by(store_id = store_data['id']).scalar()
+    liquor = Liquor.query.filter_by(id = liquor_data['id']).scalar()
+    store_has_liquor = LiquorStore.query.filter_by(liquor_id = liquor_data['id']).filter_by(store_id = store_data['id']).scalar()
 
     if not store:
       store = Store(store_data)
       db.session.add(store)
       db.session.commit()
 
-    if not liqour:
-      liqour = Liqour(liqour_data)
-      db.session.add(liqour)
+    if not liquor:
+      liquor = Liquor(liquor_data)
+      db.session.add(liquor)
       db.session.commit()
     
-    if not store_has_liqour:
-      liqour_store = LiqourStore(liqour_store_data)
-      db.session.add(liqour_store)
+    if not store_has_liquor:
+      liquor_store = LiquorStore(liquor_store_data)
+      db.session.add(liquor_store)
       db.session.commit()
 
   file.close()

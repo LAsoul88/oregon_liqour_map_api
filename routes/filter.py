@@ -1,5 +1,5 @@
 from models.store import Store
-from models.liqour import Liqour
+from models.liquor import Liquor
 
 # filter object
 # {
@@ -24,40 +24,40 @@ def filter_results(request):
   elif 'Price' in filter_string:
     range_string = request['data']['range']
     search_price = float(search_string.replace('$', ''))
-    price = getattr(Liqour, filter_string.replace(' ', '_').lower())
-    liqour = []
+    price = getattr(Liquor, filter_string.replace(' ', '_').lower())
+    liquor = []
     if range_string == 'lower':
-      liqour = Liqour.query.filter(price <= search_price).order_by(price.asc()).all()
+      liquor = Liquor.query.filter(price <= search_price).order_by(price.asc()).all()
     elif range_string == 'higher':
-      liqour = Liqour.query.filter(price >= search_price).order_by(price.asc()).all()
-    for bottle in liqour:
+      liquor = Liquor.query.filter(price >= search_price).order_by(price.asc()).all()
+    for bottle in liquor:
       results.append(bottle.serialized)
     return results
     
   elif filter_string == 'Proof':
     range_string = request['data']['range']
     proof = float(search_string)
-    liqour = []
+    liquor = []
     if range_string == 'lower':
-      liqour = Liqour.query.filter(Liqour.proof <= proof).order_by(Liqour.proof.asc()).all()
+      liquor = liquor.query.filter(Liquor.proof <= proof).order_by(Liquor.proof.asc()).all()
     elif range_string == 'higher':
-      liqour = Liqour.query.filter(Liqour.proof >= proof).order_by(Liqour.proof.asc()).all()
-    for bottle in liqour:
+      liquor = Liquor.query.filter(Liquor.proof >= proof).order_by(Liquor.proof.asc()).all()
+    for bottle in liquor:
       results.append(bottle.serialized)
     return results
 
   else: 
-    if filter_string == 'Browse All Liqour':
+    if filter_string == 'Browse All Liquor':
       filter_string = 'description'
-    descriptor = getattr(Liqour, filter_string.replace(' ', '_').lower())
+    descriptor = getattr(Liquor, filter_string.replace(' ', '_').lower())
     print('=== search_string ===', search_string)
-    liqour = Liqour.query.filter(descriptor.ilike("%{}%".format(search_string))).all()
-    for bottle in liqour:
+    liquor = Liquor.query.filter(descriptor.ilike("%{}%".format(search_string))).all()
+    for bottle in liquor:
       results.append(bottle.serialized)
     return results
     
 # (Browse By Store) - Address
-# (Browse All Liqour) - Description
+# (Browse All Liquor) - Description
 # (Type) - Category
 # (Case Price) - Case Price
 # (Bottle Price) - Bottle Price
