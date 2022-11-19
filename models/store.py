@@ -1,3 +1,5 @@
+from sqlalchemy.dialects.postgresql import ARRAY
+
 from database.db import db
 
 
@@ -6,8 +8,7 @@ class Store(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   address = db.Column(db.String(100))
   phone_number = db.Column(db.String(20))
-  lat = db.Column(db.Float)
-  lon = db.Column(db.Float)
+  coordinates = db.Column(ARRAY(db.Float, as_tuple=True))
 
   def __repr__(self):
     return self.address
@@ -18,7 +19,7 @@ class Store(db.Model):
       f"{store_data['address']} {store_data['city']}, {store_data['state']} {store_data['postal_code']}"
     )
     self.phone_number = store_data['phone_number']
-    self.coordinates = [store_data['lat'], store_data['lon']]
+    self.coordinates = [store_data['lat'], store_data['lng']]
 
   @property
   def serialized(self):
