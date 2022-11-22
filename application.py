@@ -1,4 +1,6 @@
 import os
+import logging
+
 from flask import Flask, request, redirect, url_for
 from flask_cors import CORS
 from flask_apscheduler import APScheduler
@@ -47,6 +49,7 @@ scheduler.start()
 # routes
 @app.route('/')
 def redirect_route():
+  print('hello welcome to the log')
   return redirect(url_for('liquor_route'))
 
 @app.route('/liquor', methods = ['GET'])
@@ -87,3 +90,7 @@ def check():
 
 if __name__ == '__main__':
   app.run(debug=False)
+else:
+  gunicorn_logger = logging.getLogger('gunicorn.error')
+  app.logger.handlers = gunicorn_logger.handlers
+  app.logger.setLevel(logging.INFO)
