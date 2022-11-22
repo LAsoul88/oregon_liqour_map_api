@@ -4,6 +4,7 @@ def format_store(store, liquor_list = None):
       "id": store.id,
       "address": store.address,
       "phone_number": store.phone_number,
+      "coordinates": store.coordinates,
       "liquor": liquor_list,
     }
   else:
@@ -11,6 +12,7 @@ def format_store(store, liquor_list = None):
       "id": store.id,
       "address": store.address,
       "phone_number": store.phone_number,
+      "coordinates": store.coordinates
     }
 
 def format_liquor(liquor, store_list = None):
