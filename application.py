@@ -33,18 +33,18 @@ initialize_db(app)
 
 CORS(app)
 
-scheduler = APScheduler()
-@scheduler.task('cron', id='update_db', hour=3, minute=30, misfire_grace_time=900)
-def database_update():
-  print('scraping in progress')
-  scraper = Scraper()
-  scraper.execute()
-  print('scraping complete')
-  print('db updating in progress')
-  update_db()
-  print('db updating complete')
-scheduler.init_app(app)
-scheduler.start()
+# scheduler = APScheduler()
+# @scheduler.task('cron', id='update_db', hour=3, minute=30, misfire_grace_time=900)
+# def database_update():
+#   print('scraping in progress')
+#   scraper = Scraper()
+#   scraper.execute()
+#   print('scraping complete')
+#   print('db updating in progress')
+#   update_db()
+#   print('db updating complete')
+# scheduler.init_app(app)
+# scheduler.start()
 
 # routes
 @app.route('/')
