@@ -11,7 +11,6 @@ from routes.store import get_stores, get_store
 from routes.filter import filter_results
 from scraper.scraper import Scraper
 from database.db_converter import update_db
-# from credentials import dev_url
 
 class Config:
   SCHEDULER_API_ENABLED = True
@@ -26,6 +25,8 @@ database = os.environ['RDS_DB_NAME']
 
 url_string = f'postgresql://{username}:{password}@{host}:{port}/{database}'
 app.config['SQLALCHEMY_DATABASE_URI'] = url_string
+# from credentials import dev_url
+# app.config['SQLALCHEMY_DATABASE_URI'] = dev_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config.from_object(Config())
 
