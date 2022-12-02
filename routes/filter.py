@@ -30,7 +30,7 @@ def filter_results(request):
   
   for field in filter_list:
     filter_string = field['filter']
-    search_string = field['search']    
+    search_string = str(field['search'])
 
     if 'Price' in filter_string:
       range_string = field['range']
