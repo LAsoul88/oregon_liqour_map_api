@@ -29,7 +29,7 @@ def get_store(id):
       formatted_liquor = format_liquor(liquor)
       formatted_liquor['quantity'] = row.quantity
       liquor_list.append(formatted_liquor)
-    return format_store(store, liquor_list)
+    return jsonify({'store': format_store(store, liquor_list)})
   except:
     store = Store.query.filter_by(id = id).scalar()
     liquor_store_table = LiquorStore.query.filter_by(store_id = id).order_by(LiquorStore.liquor_id.asc()).scalar()
