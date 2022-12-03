@@ -1,3 +1,6 @@
+import math
+from flask import jsonify
+
 from models.liquor import Liquor
 from models.store import Store
 from models.liquor_store import LiquorStore
@@ -5,13 +8,16 @@ from routes.formatting import format_store, format_liquor
 
 
 # get all bottles
-def get_bottles(page, per_page):
-  max = 50
-  bottles = Liquor.query.paginate(page=page, per_page=per_page, max_per_page=max)
+def get_bottles(request):
+  page = request.args.get('page') or 1
+  per_page = request.args.get('per_page') or 20
+  query = Liquor.query
+  page_count = math.ceil(query.count() / int(per_page))
+  bottles = query.order_by(Liquor.id.asc()).paginate(page=int(page), per_page=int(per_page), max_per_page=50)
   bottle_list = []
   for bottle in bottles:
     bottle_list.append(format_liquor(bottle))
-  return bottle_list
+  return jsonify({'liquor': bottle_list, 'page_total': page_count})
 
 # get single bottle
 def get_bottle(id):

@@ -1,15 +1,22 @@
+import math
+from flask import jsonify
+
 from models.store import Store
 from models.liquor import Liquor
 from models.liquor_store import LiquorStore
 from routes.formatting import format_liquor, format_store
 
 # get all stores
-def get_stores():
-  stores = Store.query.order_by(Store.id.asc()).all()
+def get_stores(request):
+  page = request.args.get('page') or 1
+  per_page = request.args.get('per_page') or 20
+  query = Store.query
+  page_count = math.ceil(query.count() / int(per_page))
+  stores = query.order_by(Store.id.asc()).paginate(page=int(page), per_page=int(per_page), max_per_page=50)
   store_list = []
   for store in stores:
     store_list.append(format_store(store))
-  return store_list
+  return jsonify({'stores': store_list, 'page_total': page_count})
 
 # get single store
 def get_store(id):
