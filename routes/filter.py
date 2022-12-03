@@ -1,9 +1,16 @@
+import math
+from flask import jsonify
+
 from models.store import Store
 from models.liquor import Liquor
 
 # filter object
 # {
 #   data: {
+#     pagination: {
+#       page: <page number>,
+#       per_page: <results per page>,
+#     },
 #     filters: [
 #       {
 #         search: <query here>,
@@ -30,7 +37,7 @@ def filter_results(request):
   
   for field in filter_list:
     filter_string = field['filter']
-    search_string = field['search']    
+    search_string = str(field['search'])
 
     if 'Price' in filter_string:
       range_string = field['range']
@@ -55,10 +62,14 @@ def filter_results(request):
       descriptor = getattr(Liquor, filter_string.replace(' ', '_').lower())
       query = query.filter(descriptor.ilike("%{}%".format(search_string)))
 
-  liquor = query.all()
+  page = request['data']['pagination']['page'] or 1
+  per_page = request['data']['pagination']['per_page'] or 20
+  liquor = query.paginate(page=int(page), per_page=int(per_page), max_per_page=50)
+  page_count = math.ceil(query.count() / int(per_page))
+  print(page_count)
   for bottle in liquor:
     results.append(bottle.serialized)
-  return results
+  return jsonify({'liquor': results, 'page_total': page_count})
 
 # (Browse By Store) - Address
 # (Browse All Liquor) - Description

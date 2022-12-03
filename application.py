@@ -57,7 +57,7 @@ def redirect_route():
 def liquor_route():
   # get all bottles
   if request.method == 'GET':
-    return get_bottles()
+    return get_bottles(request)
   
 @app.route('/liquor/<id>', methods = ['GET'])
 def liquor_id_route(id):
@@ -69,7 +69,7 @@ def liquor_id_route(id):
 def store_route():
   # get all stores
   if request.method == 'GET':
-    return get_stores()
+    return get_stores(request)
 
 @app.route('/stores/<id>', methods = ['GET'])
 def store_id_route(id):
