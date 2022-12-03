@@ -57,7 +57,17 @@ def redirect_route():
 def liquor_route():
   # get all bottles
   if request.method == 'GET':
-    return get_bottles()
+    page = request.args.get('page')
+    if not page:
+      page = 1
+    else:
+      page = int(page)
+    per_page = request.args.get('per_page')
+    if not per_page:
+      per_page = 20
+    else:
+      per_page = int(per_page)
+    return get_bottles(page, per_page)
   
 @app.route('/liquor/<id>', methods = ['GET'])
 def liquor_id_route(id):

@@ -5,8 +5,9 @@ from routes.formatting import format_store, format_liquor
 
 
 # get all bottles
-def get_bottles():
-  bottles = Liquor.query.order_by(Liquor.id.asc()).all()
+def get_bottles(page, per_page):
+  max = 50
+  bottles = Liquor.query.paginate(page=page, per_page=per_page, max_per_page=max)
   bottle_list = []
   for bottle in bottles:
     bottle_list.append(format_liquor(bottle))
