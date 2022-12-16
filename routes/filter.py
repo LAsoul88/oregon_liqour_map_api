@@ -63,6 +63,11 @@ def filter_results(request):
       query = query.filter(descriptor.ilike("%{}%".format(search_string)))
 
   page = request['data']['pagination']['page'] or 1
+  if request['data']['pagination']['per_page'] == 0:
+    liquor = query.all()
+    for bottle in liquor:
+      results.append(bottle.serialized)
+    return jsonify({'liquor': results})
   per_page = request['data']['pagination']['per_page'] or 20
   liquor = query.paginate(page=int(page), per_page=int(per_page), max_per_page=50)
   page_count = math.ceil(query.count() / int(per_page))
