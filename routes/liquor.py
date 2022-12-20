@@ -12,12 +12,13 @@ def get_bottles(request):
   page = request.args.get('page') or 1
   per_page = request.args.get('per_page') or 20
   query = Liquor.query
-  page_count = math.ceil(query.count() / int(per_page))
+  result_count = query.count()
+  page_count = math.ceil(result_count / int(per_page))
   bottles = query.order_by(Liquor.id.asc()).paginate(page=int(page), per_page=int(per_page), max_per_page=50)
   bottle_list = []
   for bottle in bottles:
     bottle_list.append(format_liquor(bottle))
-  return jsonify({'liquor': bottle_list, 'page_total': page_count})
+  return jsonify({'liquor': bottle_list, 'page_total': page_count, 'results_total': result_count})
 
 # get single bottle
 def get_bottle(id):

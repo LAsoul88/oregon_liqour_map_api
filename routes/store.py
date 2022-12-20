@@ -10,13 +10,15 @@ from routes.formatting import format_liquor, format_store
 def get_stores(request):
   # page = request.args.get('page') or 1
   # per_page = request.args.get('per_page') or 20
-  stores = Store.query.order_by(Store.id.asc()).all()
-  # page_count = math.ceil(query.count() / int(per_page))
+  query = Store.query
+  stores = query.order_by(Store.id.asc()).all()
+  result_count = query.count()
+  # page_count = math.ceil(result_count / int(per_page))
   # stores = query.order_by(Store.id.asc()).paginate(page=int(page), per_page=int(per_page), max_per_page=50)
   store_list = []
   for store in stores:
     store_list.append(format_store(store))
-  return jsonify({'stores': store_list
+  return jsonify({'stores': store_list, 'results_total': result_count
   # , 'page_total': page_count
   })
 
