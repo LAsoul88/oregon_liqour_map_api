@@ -70,11 +70,11 @@ def filter_results(request):
     return jsonify({'liquor': results})
   per_page = request['data']['pagination']['per_page'] or 20
   liquor = query.paginate(page=int(page), per_page=int(per_page), max_per_page=50)
-  page_count = math.ceil(query.count() / int(per_page))
-  print(page_count)
+  result_count = query.count()
+  page_count = math.ceil(result_count / int(per_page))
   for bottle in liquor:
     results.append(bottle.serialized)
-  return jsonify({'liquor': results, 'page_total': page_count})
+  return jsonify({'liquor': results, 'page_total': page_count, 'results_total': result_count})
 
 # (Browse By Store) - Address
 # (Browse All Liquor) - Description
