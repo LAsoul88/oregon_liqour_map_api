@@ -9,6 +9,7 @@ from database.db import initialize_db
 from routes.liquor import get_bottles, get_bottle
 from routes.store import get_stores, get_store
 from routes.filter import filter_results
+from routes.initial import initial_results
 from scraper.scraper import Scraper
 from database.db_converter import update_db
 
@@ -83,6 +84,12 @@ def filter_route():
   if request.method == 'POST':
     data = request.get_json()
     return filter_results(data)
+
+@app.route('/initial', methods = ['GET'])
+def initial_route():
+  # produce initial payload
+  if request.method == 'GET':
+    return initial_results()
 
 @app.route('/health_check')
 def check():
