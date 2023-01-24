@@ -41,3 +41,10 @@ def format_liquor(liquor, store_list = None):
       "bottle_price": liquor.bottle_price,
       "type": liquor.type
     }
+
+def format_initial(store, liquor_list):
+  return {
+    "address": store.address,
+    "phone_number": store.phone_number,
+    "liquor": liquor_list
+  }
