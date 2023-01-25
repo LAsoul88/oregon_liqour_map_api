@@ -72,11 +72,11 @@ def store_route():
   if request.method == 'GET':
     return get_stores(request)
 
-@app.route('/stores/<id>', methods = ['GET'])
-def store_id_route(id):
+@app.route('/stores/<phone_number>', methods = ['GET'])
+def store_id_route(phone_number):
   # get a store
   if request.method == 'GET':
-    return get_store(id)
+    return get_store(phone_number)
 
 @app.route('/filter', methods = ['POST'])
 def filter_route():
@@ -85,15 +85,17 @@ def filter_route():
     data = request.get_json()
     return filter_results(data)
 
-@app.route('/initial', methods = ['GET'])
+@app.route('/initial', methods = ['POST'])
+# change parameter for store endpoint to phone_number instead of id
 def initial_route():
   # produce initial payload
-  if request.method == 'GET':
-    return initial_results()
+  data = request.get_json()
+  if request.method == 'POST':
+    return initial_results(data)
 
 @app.route('/health_check')
 def check():
-  get_store(1213)
+  get_store("541-256-1200")
   return 'healthy'
 
 if __name__ == '__main__':

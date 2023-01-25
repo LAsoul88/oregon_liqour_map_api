@@ -23,10 +23,10 @@ def get_stores(request):
   })
 
 # get single store
-def get_store(id):
+def get_store(phone_number):
   try:
-    store = Store.query.filter_by(id = id).one()
-    liquor_store_table = LiquorStore.query.filter_by(store_id = id).order_by(LiquorStore.liquor_id.asc()).all()
+    store = Store.query.filter_by(phone_number = phone_number).one()
+    liquor_store_table = LiquorStore.query.filter_by(store_id = store.id).order_by(LiquorStore.liquor_id.asc()).all()
     liquor_list = []
     for row in liquor_store_table:
       liquor = Liquor.query.filter_by(id = row.liquor_id).one()
@@ -35,11 +35,11 @@ def get_store(id):
       liquor_list.append(formatted_liquor)
     return jsonify({'store': format_store(store, liquor_list)})
   except:
-    store = Store.query.filter_by(id = id).scalar()
-    liquor_store_table = LiquorStore.query.filter_by(store_id = id).order_by(LiquorStore.liquor_id.asc()).scalar()
+    store = Store.query.filter_by(phone_number = phone_number).scalar()
+    liquor_store_table = LiquorStore.query.filter_by(store_id = store.id).order_by(LiquorStore.liquor_id.asc()).scalar()
     if not store:
-      print(f'== did not find store id: {id} ==')
+      print(f'== did not find store phone number: {phone_number} ==')
     elif not liquor_store_table:
-      print(f'== did not find liquor_store_table associated with store id: {id}')
+      print(f'== did not find liquor_store_table associated with store id: {store.id}')
     else:
       print('== something else went wrong ==')
