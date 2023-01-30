@@ -2,7 +2,7 @@ import os
 import logging
 
 from flask import Flask, request, redirect, url_for
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from flask_apscheduler import APScheduler
 
 from database.db import initialize_db
@@ -17,6 +17,7 @@ class Config:
   SCHEDULER_API_ENABLED = True
 
 application = app = Flask(__name__)
+CORS(app)
 
 username = os.environ['RDS_USERNAME']
 password = os.environ['RDS_PASSWORD']
@@ -32,8 +33,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config.from_object(Config())
 
 initialize_db(app)
-
-CORS(app)
 
 # scheduler = APScheduler()
 # @scheduler.task('cron', id='update_db', hour=3, minute=30, misfire_grace_time=900)
@@ -86,7 +85,6 @@ def filter_route():
     return filter_results(data)
 
 @app.route('/initial', methods = ['POST'])
-# change parameter for store endpoint to phone_number instead of id
 def initial_route():
   # produce initial payload
   data = request.get_json()
