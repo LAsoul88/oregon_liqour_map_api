@@ -11,13 +11,16 @@ def initial_results(request):
   stores = []
   store_list = []
   for phone_number in phone_numbers:
-    store = query.filter_by(phone_number = phone_number).one()
-    stores.append(store)
+    store = query.filter_by(phone_number = phone_number).scalar()
+    if not store:
+      continue
+    else:
+      stores.append(store)
   for store in stores:
     liquor_list = []
     liquor_store_table = LiquorStore.query.filter_by(store_id = store.id).order_by(LiquorStore.liquor_id.asc()).all()
     for row in liquor_store_table:
-      liquor = Liquor.query.filter_by(id = row.liquor_id).one()
+      liquor = Liquor.query.filter_by(id = row.liquor_id).scalar()
       formatted_liquor = format_liquor(liquor)
       formatted_liquor['quantity'] = row.quantity
       liquor_list.append(formatted_liquor)

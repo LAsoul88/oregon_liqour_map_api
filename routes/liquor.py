@@ -23,12 +23,11 @@ def get_bottles(request):
 # get single bottle
 def get_bottle(id):
   try:
-    print('we got here')
-    bottle = Liquor.query.filter_by(id = id).one()
+    bottle = Liquor.query.filter_by(id = id).scalar()
     liquor_store_table = LiquorStore.query.filter_by(liquor_id = id).order_by(LiquorStore.store_id.asc()).all()
     store_list = []
     for row in liquor_store_table:
-      store = Store.query.filter_by(id = row.store_id).one()
+      store = Store.query.filter_by(id = row.store_id).scalar()
       formatted_store = format_store(store)
       formatted_store['quantity'] = row.quantity
       store_list.append(formatted_store)
