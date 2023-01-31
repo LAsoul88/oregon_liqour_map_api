@@ -25,11 +25,11 @@ def get_stores(request):
 # get single store
 def get_store(phone_number):
   try:
-    store = Store.query.filter_by(phone_number = phone_number).one()
+    store = Store.query.filter_by(phone_number = phone_number).scalar()
     liquor_store_table = LiquorStore.query.filter_by(store_id = store.id).order_by(LiquorStore.liquor_id.asc()).all()
     liquor_list = []
     for row in liquor_store_table:
-      liquor = Liquor.query.filter_by(id = row.liquor_id).one()
+      liquor = Liquor.query.filter_by(id = row.liquor_id).scalar()
       formatted_liquor = format_liquor(liquor)
       formatted_liquor['quantity'] = row.quantity
       liquor_list.append(formatted_liquor)
