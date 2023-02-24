@@ -7,9 +7,9 @@ from models.liquor import Liquor
 from models.store import Store
 from models.liquor_store import LiquorStore
 
-from credentials import API_KEY
-gmaps = googlemaps.Client(key=API_KEY)
-# gmaps = googlemaps.Client(key=os.environ['MAPS_API_KEY'])
+# from credentials import API_KEY
+# gmaps = googlemaps.Client(key=API_KEY)
+gmaps = googlemaps.Client(key=os.environ['MAPS_API_KEY'])
 
 def update_db():
   file = open('ols-results-latest.csv')

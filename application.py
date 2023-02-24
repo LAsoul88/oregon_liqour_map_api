@@ -19,16 +19,16 @@ class Config:
 application = app = Flask(__name__)
 CORS(app)
 
-# username = os.environ['RDS_USERNAME']
-# password = os.environ['RDS_PASSWORD']
-# host = os.environ['RDS_HOSTNAME']
-# port = os.environ['RDS_PORT']
-# database = os.environ['RDS_DB_NAME']
+username = os.environ['RDS_USERNAME']
+password = os.environ['RDS_PASSWORD']
+host = os.environ['RDS_HOSTNAME']
+port = os.environ['RDS_PORT']
+database = os.environ['RDS_DB_NAME']
 
-# url_string = f'postgresql://{username}:{password}@{host}:{port}/{database}'
-# app.config['SQLALCHEMY_DATABASE_URI'] = url_string
-from credentials import dev_url
-app.config['SQLALCHEMY_DATABASE_URI'] = dev_url
+url_string = f'postgresql://{username}:{password}@{host}:{port}/{database}'
+app.config['SQLALCHEMY_DATABASE_URI'] = url_string
+# from credentials import dev_url
+# app.config['SQLALCHEMY_DATABASE_URI'] = dev_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config.from_object(Config())
 
