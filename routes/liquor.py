@@ -1,10 +1,5 @@
 import math
-import googlemaps
 from flask import jsonify
-
-from credentials import API_KEY
-gmaps = googlemaps.Client(key=API_KEY)
-# gmaps = googlemaps.Client(key=os.environ['MAPS_API_KEY'])
 
 from models.liquor import Liquor
 from models.store import Store
