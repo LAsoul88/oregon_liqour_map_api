@@ -6,7 +6,7 @@ from flask_cors import CORS, cross_origin
 from flask_apscheduler import APScheduler
 
 from database.db import initialize_db
-from routes.liquor import get_bottles, get_bottle
+from routes.liquor import get_bottles, get_bottle, get_bottle_and_stores
 from routes.store import get_stores, get_store
 from routes.filter import filter_results
 from routes.initial import initial_results
@@ -19,16 +19,16 @@ class Config:
 application = app = Flask(__name__)
 CORS(app)
 
-username = os.environ['RDS_USERNAME']
-password = os.environ['RDS_PASSWORD']
-host = os.environ['RDS_HOSTNAME']
-port = os.environ['RDS_PORT']
-database = os.environ['RDS_DB_NAME']
+# username = os.environ['RDS_USERNAME']
+# password = os.environ['RDS_PASSWORD']
+# host = os.environ['RDS_HOSTNAME']
+# port = os.environ['RDS_PORT']
+# database = os.environ['RDS_DB_NAME']
 
-url_string = f'postgresql://{username}:{password}@{host}:{port}/{database}'
-app.config['SQLALCHEMY_DATABASE_URI'] = url_string
-# from credentials import dev_url
-# app.config['SQLALCHEMY_DATABASE_URI'] = dev_url
+# url_string = f'postgresql://{username}:{password}@{host}:{port}/{database}'
+# app.config['SQLALCHEMY_DATABASE_URI'] = url_string
+from credentials import dev_url
+app.config['SQLALCHEMY_DATABASE_URI'] = dev_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config.from_object(Config())
 
@@ -59,11 +59,14 @@ def liquor_route():
   if request.method == 'GET':
     return get_bottles(request)
   
-@app.route('/liquor/<id>', methods = ['GET'])
+@app.route('/liquor/<id>', methods = ['GET', 'POST'])
 def liquor_id_route(id):
   # get single bottle
   if request.method == 'GET':
     return get_bottle(id)
+  if request.method == 'POST':
+    data = request.get_json()
+    return get_bottle_and_stores(data)
 
 @app.route('/stores', methods = ['GET'])
 def store_route():
@@ -84,12 +87,12 @@ def filter_route():
     data = request.get_json()
     return filter_results(data)
 
-@app.route('/initial', methods = ['POST'])
-def initial_route():
-  # produce initial payload
-  data = request.get_json()
-  if request.method == 'POST':
-    return initial_results(data)
+# @app.route('/initial', methods = ['POST'])
+# def initial_route():
+#   # produce initial payload
+#   data = request.get_json()
+#   if request.method == 'POST':
+#     return initial_results(data)
 
 @app.route('/health_check')
 def check():
