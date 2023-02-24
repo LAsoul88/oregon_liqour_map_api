@@ -1,3 +1,5 @@
+import math
+
 def format_store(store, liquor_list = None):
   if liquor_list:
     return { 
@@ -48,3 +50,11 @@ def format_initial(store, liquor_list):
     "phone_number": store.phone_number,
     "liquor": liquor_list
   }
+
+def find_closest_stores(store_list, coordinates):
+  distance_list = []
+  for store in store_list:
+    distance = math.sqrt((float(store['coordinates'][0]) - float(coordinates[0]))**2 + (float(store['coordinates'][1]) - float(coordinates[1]))**2)
+    distance_list.append({'store': store, 'distance': distance})
+  sorted_list = sorted(distance_list, key=lambda x: x['distance'])
+  return sorted_list[0:20]
