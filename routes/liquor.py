@@ -43,7 +43,9 @@ def get_bottle(id):
       print('== something else went wrong ==')
 
 def get_bottle_and_stores(request):
-  id = request['data']['id']
+  id = ""
+  if request['data']['id']:
+    id = request['data']['id']
   coordinates = request['data']['coordinates']
   try:
     bottle = Liquor.query.filter_by(id = id).scalar()
@@ -62,6 +64,12 @@ def get_bottle_and_stores(request):
     liquor_store_table = LiquorStore.query.filter_by(liquor_id = id).order_by(LiquorStore.store_id.asc()).scalar()
     if not bottle:
       print(f'== did not find liquor id: {id} ==')
+      stores = Store.query.all()
+      store_list = []
+      for store in stores:
+        formatted_store = format_store(store)
+        store_list.append(formatted_store)
+      return jsonify({'stores': find_closest_stores(store_list, coordinates)})
     elif not liquor_store_table:
       print(f'== did not find liquor_store_table associated with liquor id: {id}')
     else:
