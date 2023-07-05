@@ -11,6 +11,7 @@ class Liquor(db.Model):
   case_price = db.Column(db.Float)
   bottle_price = db.Column(db.Float)
   type = db.Column(db.String(30))
+  img = db.Column(db.String())
 
   def __repr__(self):
     return self.id
@@ -25,6 +26,7 @@ class Liquor(db.Model):
     self.case_price = '{:2f}'.format(liquor_data['case_price'])
     self.bottle_price = '{:2f}'.format(liquor_data['bottle_price'])
     self.type = liquor_data['type']
+    self.img = liquor_data['img']
 
   @property
   def serialized(self):
@@ -38,4 +40,5 @@ class Liquor(db.Model):
       'case_price': '$' + str('{:.2f}'.format(self.case_price)),
       'bottle_price': '$' + str('{:.2f}'.format(self.bottle_price)),
       'type': self.type,
+      'img': self.img,
     }
