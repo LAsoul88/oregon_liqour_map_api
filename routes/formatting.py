@@ -29,6 +29,7 @@ def format_liquor(liquor, store_list = None):
       "case_price": liquor.case_price,
       "bottle_price": liquor.bottle_price,
       "type": liquor.type,
+      "img": liquor.img,
       "stores": store_list
     }
   else:
@@ -41,7 +42,8 @@ def format_liquor(liquor, store_list = None):
       "age": liquor.age,
       "case_price": liquor.case_price,
       "bottle_price": liquor.bottle_price,
-      "type": liquor.type
+      "type": liquor.type,
+      "img": liquor.img
     }
 
 def format_initial(store, liquor_list):
