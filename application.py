@@ -2,50 +2,25 @@ import os
 import logging
 
 from flask import Flask, request, redirect, url_for
-from flask_cors import CORS, cross_origin
-from flask_apscheduler import APScheduler
+from flask_cors import CORS
 
 from database.db import initialize_db
 from routes.liquor import get_bottles, get_bottle, get_bottle_and_stores
 from routes.store import get_stores, get_store
 from routes.filter import filter_results
-from routes.initial import initial_results
-from scraper.scraper import Scraper
-from database.db_converter import update_db
 
-class Config:
-  SCHEDULER_API_ENABLED = True
 
 application = app = Flask(__name__)
 CORS(app)
 
-username = os.environ['RDS_USERNAME']
-password = os.environ['RDS_PASSWORD']
-host = os.environ['RDS_HOSTNAME']
-port = os.environ['RDS_PORT']
-database = os.environ['RDS_DB_NAME']
-
-url_string = f'postgresql://{username}:{password}@{host}:{port}/{database}'
-app.config['SQLALCHEMY_DATABASE_URI'] = url_string
+prod_url = f"postgresql://{os.environ['RDS_USERNAME']}:{os.environ['RDS_PASSWORD']}@{os.environ['RDS_HOSTNAME']}:{os.environ['RDS_PORT']}/{os.environ['RDS_DB_NAME']}"
 # from credentials import dev_url
-# app.config['SQLALCHEMY_DATABASE_URI'] = dev_url
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+class Config:
+  SQLALCHEMY_DATABASE_URI = prod_url
+  SQLALCHEMY_TRACK_MODIFICATIONS = False
 app.config.from_object(Config())
 
 initialize_db(app)
-
-# scheduler = APScheduler()
-# @scheduler.task('cron', id='update_db', hour=3, minute=30, misfire_grace_time=900)
-# def database_update():
-#   print('scraping in progress')
-#   scraper = Scraper()
-#   scraper.execute()
-#   print('scraping complete')
-#   print('db updating in progress')
-#   update_db()
-#   print('db updating complete')
-# scheduler.init_app(app)
-# scheduler.start()
 
 # routes
 @app.route('/')
