@@ -56,8 +56,7 @@ def get_bottle_and_stores(request):
       formatted_store = format_store(store)
       formatted_store['quantity'] = row.quantity
       store_list.append(formatted_store)
-    if len(store_list) > 20:
-      store_list = find_closest_stores(store_list, coordinates)
+    store_list = find_closest_stores(store_list, coordinates)
     return jsonify({'liquor': format_liquor(bottle, store_list)})
   except:
     bottle = Liquor.query.filter_by(id = id).scalar()
